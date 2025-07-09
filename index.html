@@ -6,18 +6,55 @@
     <title>Game Identifikasi Hewan Ternak Tingkat Lanjut (CF)</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 20px;
-            background-color: #e8f5e9; /* Light green background */
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; /* Hapus margin default body */
+            background-color: #e8f5e9;
             color: #333;
+            /* Tambahkan padding horizontal ke body untuk ruang di sisi kiri dan kanan */
+            padding: 20px; /* Padding umum untuk atas/bawah/kiri/kanan */
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+  /* Pastikan box-sizing diatur secara global untuk kemudahan layout */
+        * {
+            box-sizing: border-box;
+        }
+   /* Styling untuk wrapper utama yang akan menggunakan Flexbox */
+        .main-content-wrapper {
+            display: flex;
+            flex-wrap: wrap; /* Memungkinkan item untuk pecah baris ke bawah */
+            justify-content: space-between; /* Memberi ruang di antara kolom */
+            gap: 30px; /* Jarak antar kolom */
+            margin-top: 30px;
+        }
+
+        /* Styling untuk bagian input (ciri-ciri dan tombol) */
+        .input-controls-section {
+            flex: 1; /* Akan tumbuh mengisi ruang yang tersedia */
+            min-width: 300px; /* Lebar minimum sebelum pecah baris */
+        }
+
+        /* Styling untuk bagian hasil */
+        .results-section {
+            flex: 1; /* Akan tumbuh mengisi ruang yang tersedia */
+            min-width: 300px; /* Lebar minimum sebelum pecah baris */
+            background-color: #fff; /* Pastikan background putih seperti container utama */
+            padding: 25px; /* Sesuaikan padding agar terlihat rapi */
+            border-radius: 10px; /* Sesuaikan border-radius */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sesuaikan shadow */
+            /* Menggantikan styling #results yang lama */
+            border-top: none !important; /* Hapus border-top lama jika ada */
+            margin-top: 0 !important; /* Hapus margin-top lama jika ada */
         }
         .container {
-            max-width: 800px;
-            margin: 30px auto;
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+             /* max-width: 800px; <-- Hapus atau komen baris ini */
+            width: 100%; /* Pastikan mengambil lebar penuh */
+            padding: 30px; /* Padding ini akan menjadi "jarak" dari tepi layar */
+            margin: 0; /* Hapus margin auto karena sudah full width */
+            background-color: #ffffff; /* Biarkan background putih di dalam container */
+            border-radius: 0; /* Hapus border-radius jika ingin kotak penuh */
+            box-shadow: none; /* Hapus shadow jika ingin tampilan rata */
+            /* Jika Anda tetap ingin bayangan atau border-radius, Anda bisa menambahkan sebuah div wrapper lain di dalam container */
         }
         h1, h2 {
             color: #2e7d32; /* Darker green */
@@ -108,9 +145,9 @@
             transform: translateY(-3px);
         }
         #results {
-            margin-top: 40px;
-            border-top: 2px solid #a5d6a7;
-            padding-top: 25px;
+                margin-top: 0; /* Pastikan tidak ada margin-top ekstra */
+            border-top: none; /* Pastikan tidak ada border-top ekstra */
+            padding-top: 0; /* Pastikan tidak ada padding-top ekstra */
         }
         .result-item {
             background-color: #e0f2f7; /* Light blue */
@@ -166,135 +203,224 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+  @media (max-width: 768px) {
+            .main-content-wrapper {
+                flex-direction: column; /* Ubah arah Flexbox menjadi kolom */
+                gap: 20px; /* Sesuaikan jarak antar bagian */
+            }
+
+            .input-controls-section,
+            .results-section {
+                min-width: unset; /* Hapus min-width */
+                width: 100%; /* Ambil lebar penuh */
+            }
+
+            /* Untuk mobile, kembalikan styling shadow dan padding ke results-section */
+            .results-section {
+                margin-top: 20px !important; /* Tambahkan margin atas saat menumpuk */
+                padding: 25px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+        }
+  @media (min-width: 769px) {
+            .container {
+                padding: 30px; /* Kembali ke padding semula untuk desktop */
+            }
+  body {
+                padding-left: 50px; /* Contoh padding lebih besar untuk desktop */
+                padding-right: 50px;
+            }
+        }
+/* ... CSS sebelumnya ... */
+
+        .floating-doc-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: fixed; /* Membuat elemen melayang */
+            bottom: 20px;
+            right: 30px;
+            background-color: #007bff; /* Warna latar tombol */
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Pastikan tombol berada di atas elemen lain */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            animation: float 3s ease-in-out infinite; /* Animasi mengambang */
+        }
+
+        .floating-doc-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .floating-doc-button .icon {
+            font-size: 1.5em; /* Ukuran ikon */
+        }
+
+        /* Animasi mengambang */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsif: Pindahkan sedikit ke kiri di layar kecil agar tidak tertutup */
+        @media (max-width: 600px) {
+            .floating-doc-button {
+                right: 15px;
+                bottom: 15px;
+                padding: 12px 15px;
+                font-size: 0.9em;
+                gap: 5px;
+            }
+            .floating-doc-button .icon {
+                font-size: 1.2em;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Sistem Pakar Identifikasi Hewan Ternak</h1>
         <p class="instructions">Pilih tingkat keyakinan Anda terhadap setiap ciri-ciri hewan, lalu klik 'Identifikasi Hewan!'</p>
-        
-        <div class="feature-category">
-            <h3>Ciri-ciri Fisik Umum</h3>
-            <div class="feature-item">
-                <label for="g-berkaki-empat">Berkaki empat</label>
-                <select id="g-berkaki-empat">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
-            </div>
-            <div class="feature-item">
-                <label for="g-bertanduk">Bertanduk</label>
-                <select id="g-bertanduk">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
-            </div>
-            <div class="feature-item">
-                <label for="g-berkulit-tebal">Berkulit tebal dan berkerut</label>
-                <select id="g-berkulit-tebal">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
-            </div>
-             <div class="feature-item">
-                <label for="g-berbulu-tebal">Berbulu tebal (mirip domba)</label>
-                <select id="g-berbulu-tebal">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
-            </div>
-            <div class="feature-item">
-                <label for="g-mempunyai-punuk">Mempunyai punuk</label>
-                <select id="g-mempunyai-punuk">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
-            </div>
-        </div>
+   <div class="main-content-wrapper">
+            <div class="input-controls-section">
+                <div class="feature-category">
+                    <h3>Ciri-ciri Fisik Umum</h3>
+                    <div class="feature-item">
+                        <label for="g-berkaki-empat">Berkaki empat</label>
+                        <select id="g-berkaki-empat">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                    <div class="feature-item">
+                        <label for="g-bertanduk">Bertanduk</label>
+                        <select id="g-bertanduk">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                    <div class="feature-item">
+                        <label for="g-berkulit-tebal">Berkulit tebal dan berkerut</label>
+                        <select id="g-berkulit-tebal">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                     <div class="feature-item">
+                        <label for="g-berbulu-tebal">Berbulu tebal (mirip domba)</label>
+                        <select id="g-berbulu-tebal">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                    <div class="feature-item">
+                        <label for="g-mempunyai-punuk">Mempunyai punuk</label>
+                        <select id="g-mempunyai-punuk">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                </div>
 
-        <div class="feature-category">
-            <h3>Ciri-ciri Perilaku & Diet</h3>
-            <div class="feature-item">
-                <label for="g-memakan-rumput">Memakan rumput/tumbuhan (herbivora)</label>
-                <select id="g-memakan-rumput">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
-            </div>
-            <div class="feature-item">
-                <label for="g-suka-berkubang">Suka berkubang di lumpur/air</label>
-                <select id="g-suka-berkubang">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
-            </div>
-                   </div>
+                <div class="feature-category">
+                    <h3>Ciri-ciri Perilaku & Diet</h3>
+                    <div class="feature-item">
+                        <label for="g-memakan-rumput">Memakan rumput/tumbuhan (herbivora)</label>
+                        <select id="g-memakan-rumput">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                    <div class="feature-item">
+                        <label for="g-suka-berkubang">Suka berkubang di lumpur/air</label>
+                        <select id="g-suka-berkubang">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                </div>
 
-        <div class="feature-category">
-            <h3>Ciri-ciri Produksi/Manfaat</h3>
-            <div class="feature-item">
-                <label for="g-menghasilkan-susu">Menghasilkan susu</label>
-                <select id="g-menghasilkan-susu">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
+                <div class="feature-category">
+                    <h3>Ciri-ciri Produksi/Manfaat</h3>
+                    <div class="feature-item">
+                        <label for="g-menghasilkan-susu">Menghasilkan susu</label>
+                        <select id="g-menghasilkan-susu">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                    <div class="feature-item">
+                        <label for="g-menghasilkan-daging">Menghasilkan daging</label>
+                        <select id="g-menghasilkan-daging">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                    <div class="feature-item">
+                        <label for="g-digunakan-tenaga-kerja">Digunakan sebagai tenaga kerja</label>
+                        <select id="g-digunakan-tenaga-kerja">
+                            <option value="0">Tidak Tahu</option>
+                            <option value="0.2">Sedikit Yakin</option>
+                            <option value="0.5">Cukup Yakin</option>
+                            <option value="0.8">Sangat Yakin</option>
+                            <option value="1.0">Pasti Ada</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button onclick="identifyAnimal()">Identifikasi Hewan!</button>
             </div>
-            <div class="feature-item">
-                <label for="g-menghasilkan-daging">Menghasilkan daging</label>
-                <select id="g-menghasilkan-daging">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
-            </div>
-            <div class="feature-item">
-                <label for="g-digunakan-tenaga-kerja">Digunakan sebagai tenaga kerja</label>
-                <select id="g-digunakan-tenaga-kerja">
-                    <option value="0">Tidak Tahu</option>
-                    <option value="0.2">Sedikit Yakin</option>
-                    <option value="0.5">Cukup Yakin</option>
-                    <option value="0.8">Sangat Yakin</option>
-                    <option value="1.0">Pasti Ada</option>
-                </select>
-            </div>
-        </div>
-        
-        <button onclick="identifyAnimal()">Identifikasi Hewan!</button>
-        <a href="dokumentasi.html" class="documentation-button">Lihat Dokumentasi Sistem</a>
 
-        <div id="results">
-            <h2>Hasil Identifikasi:</h2>
-            <div id="animalResults">
-                <p class="no-results">Pilih tingkat keyakinan pada ciri-ciri di atas dan klik 'Identifikasi Hewan!'</p>
+            <div id="results" class="results-section">
+                <h2>Hasil Identifikasi:</h2>
+                <div id="animalResults">
+                    <p class="no-results">Pilih tingkat keyakinan pada ciri-ciri di atas dan klik 'Identifikasi Hewan!'</p>
+                </div>
             </div>
-        </div>
-    </div>
+        </div>     
+       </div>
+
+ <a href="dokumentasi.html" class="floating-doc-button">
+        <span class="icon">📄</span> Dokumentasi
+    </a>
 
     <script>
 // --- Basis Pengetahuan Sistem Pakar (Certainty Factor) ---
