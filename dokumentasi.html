@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentasi Sistem Pakar Identifikasi Hewan Ternak</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2e7d32;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 8px;
+            font-size: 1.8em;
+        }
+        h3 {
+            color: #388e3c;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        ol {
+            list-style-type: decimal;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0 auto;
+            padding: 12px 25px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dokumentasi Sistem Pakar Identifikasi Hewan Ternak</h1>
+        <p>Dokumen ini menjelaskan bagaimana sistem identifikasi hewan ternak ini bekerja, mulai dari basis pengetahuan hingga metode inferensinya.</p>
+
+        ---
+
+        <h2>1. Gambaran Umum Sistem</h2>
+        <p>Sistem ini merupakan aplikasi web sederhana yang dirancang untuk membantu mengidentifikasi jenis hewan ternak berdasarkan ciri-ciri fisik, perilaku, dan produksi yang diamati oleh pengguna. Sistem ini menggunakan pendekatan kecerdasan buatan, khususnya <strong>Sistem Pakar</strong>, yang dilengkapi dengan metode <strong>Certainty Factor (CF)</strong> untuk menangani ketidakpastian dalam proses identifikasi.</p>
+
+        ---
+
+        <h2>2. Arsitektur Sistem</h2>
+        <p>Sistem ini dibangun menggunakan teknologi web standar dan terdiri dari beberapa komponen utama:</p>
+        <ul>
+            <li><strong>Antarmuka Pengguna (UI)</strong>: Dibangun dengan HTML dan CSS, menyediakan formulir interaktif di mana pengguna dapat memilih ciri-ciri hewan dan tingkat keyakinan mereka terhadap ciri tersebut.</li>
+            <li><strong>Basis Pengetahuan (Knowledge Base)</strong>: Berisi data tentang ciri-ciri berbagai jenis hewan ternak beserta tingkat keyakinan (CF) pakar terhadap asosiasi ciri tersebut dengan hewan tertentu. Basis pengetahuan ini direpresentasikan dalam objek JavaScript.</li>
+            <li><strong>Mesin Inferensi (Inference Engine)</strong>: Ini adalah otak sistem, diimplementasikan dalam JavaScript. Bertanggung jawab untuk memproses input pengguna, menggabungkan bukti menggunakan metode Certainty Factor, dan menarik kesimpulan (identifikasi hewan yang paling mungkin).</li>
+            <li><strong>Modul Penjelasan (Implicit)</strong>: Meskipun tidak ada modul penjelasan eksplisit, hasil identifikasi yang ditampilkan (hewan dan persentase CF) serta struktur pertanyaan membantu pengguna memahami dasar-dasar kesimpulan.</li>
+        </ul>
+
+        ---
+
+        <h2>3. Metode Certainty Factor (CF)</h2>
+        <p>Certainty Factor (CF) adalah metode yang digunakan untuk merepresentasikan dan menggabungkan ketidakpastian dalam penalaran. Dalam konteks sistem ini:</p>
+        <ul>
+            <li>Setiap ciri hewan dalam basis pengetahuan memiliki nilai CF yang menunjukkan seberapa kuat ciri tersebut mengindikasikan suatu hewan (CF pakar).</li>
+            <li>Pengguna juga memberikan tingkat keyakinan mereka terhadap suatu ciri (CF pengguna) melalui pilihan dropdown ('Tidak Tahu', 'Sedikit Yakin', dst.).</li>
+            <li>Ketika mengidentifikasi, sistem menggabungkan CF pakar dengan CF pengguna untuk mendapatkan CF efektif untuk setiap ciri.</li>
+            <li>Kemudian, CF efektif dari semua ciri yang relevan digabungkan menggunakan rumus kombinasi CF untuk menghitung total CF untuk setiap hewan yang mungkin.</li>
+        </ul>
+
+        <h3>Rumus Kombinasi Certainty Factor:</h3>
+        <p>Jika <code>CF1</code> dan <code>CF2</code> adalah nilai Certainty Factor dari dua bukti yang mendukung kesimpulan yang sama, CF gabungannya dihitung sebagai berikut:</p>
+        <pre><code>CF_gabungan = CF1 + CF2 * (1 - CF1)</code></pre>
+        <p>Ini berlaku jika kedua CF adalah positif (mendukung). Untuk kasus di mana ada CF negatif (menyangkal) atau kombinasi positif-negatif, rumus bisa lebih kompleks, namun dalam sistem ini kita fokus pada bukti yang bersifat mendukung.</p>
+        <p>Nilai CF hasil akhir akan selalu berada dalam rentang 0 hingga 1 (atau 0% hingga 100%).</p>
+
+        ---
+
+        <h2>4. Basis Pengetahuan (knowledgeBase)</h2>
+        <p>Basis pengetahuan diimplementasikan dalam file <code>script.js</code> sebagai objek JavaScript. Setiap kunci utama merepresentasikan nama hewan, dan nilainya adalah objek lain yang berisi ciri-ciri hewan tersebut beserta CF pakarnya.</p>
+        <h3>Struktur Data Contoh:</h3>
+        <pre><code class="language-javascript">const knowledgeBase = {
+    "Sapi": {
+        "berkaki-empat": 0.9,
+        "memakan-rumput": 0.95,
+        "menghasilkan-susu": 0.85,
+        "menghasilkan-daging": 0.75,
+        // ... ciri lainnya
+    },
+    "Kambing": {
+        "berkaki-empat": 0.9,
+        "bertanduk": 0.8,
+        // ... ciri lainnya
+    },
+    // ... hewan lainnya
+};
+</code></pre>
+        <ul>
+            <li>Setiap ciri memiliki nilai CF pakar antara 0.0 (tidak relevan/tidak mendukung) hingga 1.0 (sangat kuat mendukung).</li>
+            <li>Nama ciri (misal: "memakan-rumput") harus sesuai dengan ID dari elemen <code>&lt;select&gt;</code> di HTML.</li>
+        </ul>
+
+        ---
+
+        <h2>5. Proses Inferensi (Fungsi `identifyAnimal()`)</h2>
+        <p>Saat pengguna mengklik tombol "Identifikasi Hewan!", fungsi <code>identifyAnimal()</code> di <code>script.js</code> akan dieksekusi. Langkah-langkah utama yang terjadi adalah:</p>
+        <ol>
+            <li><strong>Mengambil Input Pengguna:</strong> Sistem membaca nilai (CF pengguna) dari setiap elemen <code>&lt;select&gt;</code> yang ada di halaman.</li>
+            <li><strong>Inisialisasi CF Hewan:</strong> Setiap hewan dalam basis pengetahuan diinisialisasi dengan CF awal 0.</li>
+            <li><strong>Iterasi dan Penggabungan CF:</strong>
+                <ul>
+                    <li>Untuk setiap hewan dalam <code>knowledgeBase</code>:</li>
+                    <li>Sistem mengiterasi semua ciri yang dimiliki hewan tersebut (dari basis pengetahuan).</li>
+                    <li>Untuk setiap ciri, sistem mendapatkan CF pakar dari ciri tersebut dan CF yang diberikan oleh pengguna.</li>
+                    <li>CF efektif untuk ciri tersebut dihitung dengan mengalikan CF pakar dan CF pengguna: <code>effectiveCF = expertCF * userCF</code>.</li>
+                    <li><code>effectiveCF</code> ini kemudian digabungkan dengan total CF hewan saat ini menggunakan fungsi <code>combineCF()</code>.</li>
+                </ul>
+            </li>
+            <li><strong>Menampilkan Hasil:</strong> Setelah semua ciri diproses, hewan-hewan diurutkan berdasarkan total CF mereka (dari tertinggi ke terendah). Hasil yang memiliki CF di atas ambang batas tertentu (misal: 5%) kemudian ditampilkan di antarmuka pengguna dengan nama hewan, persentase CF, dan bar progres visual.</li>
+        </ol>
+
+        ---
+
+        <h2>6. Cara Menggunakan Aplikasi</h2>
+        <ol>
+            <li>Buka file <code>index.html</code> di peramban web Anda.</li>
+            <li>Pada setiap daftar ciri, pilih tingkat keyakinan Anda terhadap keberadaan ciri tersebut pada hewan yang ingin diidentifikasi.</li>
+            <li>Klik tombol "Identifikasi Hewan!".</li>
+            <li>Hasil identifikasi akan muncul di bagian bawah, menunjukkan hewan yang paling mungkin beserta tingkat keyakinan sistem.</li>
+        </ol>
+
+        <a href="index.html" class="back-button">Kembali ke Halaman Utama</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Identifikasi Hewan Ternak Tingkat Lanjut (CF)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #e8f5e9; /* Light green background */
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        h1, h2 {
+            color: #2e7d32; /* Darker green */
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+        }
+        .instructions {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+        .feature-category {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #c8e6c9;
+            border-radius: 10px;
+            background-color: #f0fdf2;
+        }
+        .feature-category h3 {
+            color: #4CAF50; /* Green */
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 1px dashed #a5d6a7;
+            padding-bottom: 8px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .feature-item label {
+            flex: 1;
+            font-size: 1.05em;
+            color: #388e3c;
+            margin-right: 15px;
+        }
+        .feature-item select {
+            padding: 8px;
+            border: 1px solid #a5d6a7;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #e8f5e9;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 18px 25px;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 30px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        button:hover {
+            background-color: #388e3c; /* Darker green on hover */
+            transform: translateY(-3px);
+        }
+.documentation-button {
+            display: block;
+            width: 100%;
+            padding: 15px 25px;
+            background-color: #17a2b8; /* Cyan-ish color */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            /* BARU: Tambahkan ini */
+            box-sizing: border-box;
+        }
+        .documentation-button:hover {
+            background-color: #138496;
+            transform: translateY(-3px);
+        }
+        #results {
+            margin-top: 40px;
+            border-top: 2px solid #a5d6a7;
+            padding-top: 25px;
+        }
+        .result-item {
+            background-color: #e0f2f7; /* Light blue */
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 6px solid #2196f3; /* Blue border */
+            animation: fadeIn 0.6s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.25em;
+        }
+        .result-header strong {
+            color: #1976d2; /* Darker blue */
+        }
+        .result-header span {
+            font-weight: bold;
+            color: #d32f2f; /* Red for CF */
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 15px;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #4CAF50; /* Green */
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            line-height: 15px;
+            font-size: 0.8em;
+            transition: width 1s ease-out;
+        }
+        .no-results {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sistem Pakar Identifikasi Hewan Ternak</h1>
+        <p class="instructions">Pilih tingkat keyakinan Anda terhadap setiap ciri-ciri hewan, lalu klik 'Identifikasi Hewan!'</p>
+        
+        <div class="feature-category">
+            <h3>Ciri-ciri Fisik Umum</h3>
+            <div class="feature-item">
+                <label for="g-berkaki-empat">Berkaki empat</label>
+                <select id="g-berkaki-empat">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+            <div class="feature-item">
+                <label for="g-bertanduk">Bertanduk</label>
+                <select id="g-bertanduk">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+            <div class="feature-item">
+                <label for="g-berkulit-tebal">Berkulit tebal dan berkerut</label>
+                <select id="g-berkulit-tebal">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+             <div class="feature-item">
+                <label for="g-berbulu-tebal">Berbulu tebal (mirip domba)</label>
+                <select id="g-berbulu-tebal">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+            <div class="feature-item">
+                <label for="g-mempunyai-punuk">Mempunyai punuk</label>
+                <select id="g-mempunyai-punuk">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="feature-category">
+            <h3>Ciri-ciri Perilaku & Diet</h3>
+            <div class="feature-item">
+                <label for="g-memakan-rumput">Memakan rumput/tumbuhan (herbivora)</label>
+                <select id="g-memakan-rumput">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+            <div class="feature-item">
+                <label for="g-suka-berkubang">Suka berkubang di lumpur/air</label>
+                <select id="g-suka-berkubang">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+                   </div>
+
+        <div class="feature-category">
+            <h3>Ciri-ciri Produksi/Manfaat</h3>
+            <div class="feature-item">
+                <label for="g-menghasilkan-susu">Menghasilkan susu</label>
+                <select id="g-menghasilkan-susu">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+            <div class="feature-item">
+                <label for="g-menghasilkan-daging">Menghasilkan daging</label>
+                <select id="g-menghasilkan-daging">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+            <div class="feature-item">
+                <label for="g-digunakan-tenaga-kerja">Digunakan sebagai tenaga kerja</label>
+                <select id="g-digunakan-tenaga-kerja">
+                    <option value="0">Tidak Tahu</option>
+                    <option value="0.2">Sedikit Yakin</option>
+                    <option value="0.5">Cukup Yakin</option>
+                    <option value="0.8">Sangat Yakin</option>
+                    <option value="1.0">Pasti Ada</option>
+                </select>
+            </div>
+        </div>
+        
+        <button onclick="identifyAnimal()">Identifikasi Hewan!</button>
+        <a href="dokumentasi.html" class="documentation-button">Lihat Dokumentasi Sistem</a>
+
+        <div id="results">
+            <h2>Hasil Identifikasi:</h2>
+            <div id="animalResults">
+                <p class="no-results">Pilih tingkat keyakinan pada ciri-ciri di atas dan klik 'Identifikasi Hewan!'</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+// --- Basis Pengetahuan Sistem Pakar (Certainty Factor) ---
+// Setiap ciri memiliki CF untuk hewan-hewan tertentu.
+// CF (0.0 - 1.0) menunjukkan seberapa kuat ciri tersebut mengindikasikan hewan.
+const knowledgeBase = {
+    "Sapi": {
+        "berkaki-empat": 0.9,
+        "bertanduk": 0.6, // Tidak semua sapi bertanduk kuat
+        "memakan-rumput": 0.95,
+        "menghasilkan-susu": 0.85,
+        "menghasilkan-daging": 0.75,
+        "digunakan-tenaga-kerja": 0.7,
+        "berkulit-tebal": 0.5 // Lebih tebal dari kambing/domba, tapi tidak seperti gajah
+    },
+    "Kambing": {
+        "berkaki-empat": 0.9,
+        "bertanduk": 0.8, // Lebih umum bertanduk daripada sapi
+        "memakan-rumput": 0.9,
+        "menghasilkan-susu": 0.7,
+        "menghasilkan-daging": 0.65
+    },
+    "Domba": {
+        "berkaki-empat": 0.9,
+        "memakan-rumput": 0.85,
+        "menghasilkan-daging": 0.6,
+        "berbulu-tebal": 0.98, // Ciri sangat khas domba
+        "bertanduk": 0.4 // Beberapa domba tidak bertanduk
+    },
+    "Babi": {
+        "berkaki-empat": 0.9,
+        "suka-berkubang": 0.9,
+        "menghasilkan-daging": 0.9,
+        "memakan-rumput": 0.3 // Omnivora, bukan hanya rumput
+    },
+    "Unta": {
+        "berkaki-empat": 0.9,
+        "mempunyai-punuk": 0.98, // Ciri sangat khas
+        "memakan-rumput": 0.7, // Mampu makan berbagai tumbuhan gurun
+        "digunakan-tenaga-kerja": 0.8,
+        "berkulit-tebal": 0.8
+    },
+    "Kuda": {
+        "berkaki-empat": 0.98,
+        "memakan-rumput": 0.9,
+        "digunakan-tenaga-kerja": 0.95,
+        "menghasilkan-daging": 0.3 // Jarang di sebagian budaya
+    }
+};
+
+/**
+ * Fungsi untuk menggabungkan dua nilai Certainty Factor (CF).
+ * Rumus: CF_gabungan = CF1 + CF2 * (1 - CF1)
+ * Asumsi: Semua CF adalah positif (bukti menambah keyakinan).
+ */
+function combineCF(cf1, cf2) {
+    // Pastikan nilai CF tidak melebihi 1.0
+    return Math.min(1.0, cf1 + cf2 * (1 - cf1));
+}
+
+/**
+ * Fungsi utama untuk mengidentifikasi hewan.
+ */
+function identifyAnimal() {
+    const selectedFeatureStrengths = {}; // Objek untuk menyimpan kekuatan keyakinan pengguna pada setiap ciri
+
+    // Ambil semua elemen <select> di halaman
+    document.querySelectorAll('.feature-category select').forEach(selectElement => {
+        const featureId = selectElement.id.replace('g-', ''); // Ambil ID tanpa 'g-'
+        // Konversi nilai dari select (string) ke float
+        selectedFeatureStrengths[featureId] = parseFloat(selectElement.value);
+    });
+
+    const animalCFs = {}; // Objek untuk menyimpan total CF setiap hewan
+
+    // Inisialisasi semua hewan dengan CF 0
+    for (const animal in knowledgeBase) {
+        animalCFs[animal] = 0;
+    }
+
+    let anyFeatureSelected = false;
+    for (const feature in selectedFeatureStrengths) {
+        if (selectedFeatureStrengths[feature] > 0) { // Jika pengguna memiliki keyakinan > 0
+            anyFeatureSelected = true;
+            break;
+        }
+    }
+
+    if (!anyFeatureSelected) {
+        document.getElementById('animalResults').innerHTML = '<p class="no-results">Pilih setidaknya satu ciri dengan tingkat keyakinan tertentu.</p>';
+        return;
+    }
+
+    // Iterasi setiap hewan di basis pengetahuan
+    for (const animal in knowledgeBase) {
+        const animalFeatures = knowledgeBase[animal]; // Ciri-ciri hewan ini dari basis pengetahuan
+        let currentAnimalCF = 0; // CF awal untuk hewan ini, diakumulasi dari bukti
+
+        // Iterasi setiap ciri yang ada di basis pengetahuan hewan ini
+        for (const featureInKB in animalFeatures) {
+            // Dapatkan CF yang diberikan pakar untuk ciri ini pada hewan ini
+            const expertCFForFeature = animalFeatures[featureInKB];
+            
+            // Dapatkan CF yang diberikan pengguna untuk ciri ini
+            const userCFForFeature = selectedFeatureStrengths[featureInKB] || 0; // Default 0 jika tidak dipilih/tidak tahu
+
+            // Hanya gabungkan jika pengguna memiliki keyakinan pada ciri ini
+            if (userCFForFeature > 0 && expertCFForFeature > 0) {
+                // CF gabungan ciri: Expert_CF * User_CF
+                // Ini adalah cara untuk "menurunkan" keyakinan pakar berdasarkan ketidakpastian pengguna.
+                const effectiveCF = expertCFForFeature * userCFForFeature; 
+                currentAnimalCF = combineCF(currentAnimalCF, effectiveCF);
+            }
+        }
+        animalCFs[animal] = currentAnimalCF; // Simpan CF total untuk hewan ini
+    }
+
+    // Ubah objek animalCFs menjadi array agar bisa diurutkan
+    const sortedAnimals = Object.keys(animalCFs).map(animal => ({
+        name: animal,
+        cf: animalCFs[animal]
+    })).sort((a, b) => b.cf - a.cf); // Urutkan dari CF tertinggi
+
+    displayResults(sortedAnimals);
+}
+
+/**
+ * Fungsi untuk menampilkan hasil di halaman web.
+ */
+function displayResults(results) {
+    const resultsDiv = document.getElementById('animalResults');
+    resultsDiv.innerHTML = ''; // Kosongkan hasil sebelumnya
+
+    // Filter hasil yang CF-nya lebih besar dari ambang batas (misal 0.1)
+    const significantResults = results.filter(item => item.cf > 0.05); // Ambang batas lebih rendah untuk fleksibilitas
+
+    if (significantResults.length === 0) {
+        resultsDiv.innerHTML = '<p class="no-results">Tidak ada hewan yang cocok secara signifikan berdasarkan ciri-ciri yang dipilih.</p>';
+        return;
+    }
+
+    significantResults.forEach(item => {
+        const percentageCF = (item.cf * 100).toFixed(1); // Konversi CF ke persentase
+
+        const resultItem = document.createElement('div');
+        resultItem.classList.add('result-item');
+        
+        resultItem.innerHTML = `
+            <div class="result-header">
+                <strong>${item.name}</strong> <span>CF: ${percentageCF}%</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: ${percentageCF}%;"></div>
+            </div>
+        `;
+        resultsDiv.appendChild(resultItem);
+    });
+}
+</script>
+</body>
+</html>
