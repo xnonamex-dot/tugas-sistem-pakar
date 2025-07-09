@@ -1,574 +1,653 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Game Identifikasi Hewan Ternak Tingkat Lanjut (CF)</title>
     <style>
-        body {
-         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0; /* Hapus margin default body */
-            background-color: #e8f5e9;
-            color: #333;
-            /* Tambahkan padding horizontal ke body untuk ruang di sisi kiri dan kanan */
-            padding: 20px; /* Padding umum untuk atas/bawah/kiri/kanan */
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-  /* Pastikan box-sizing diatur secara global untuk kemudahan layout */
-        * {
-            box-sizing: border-box;
-        }
-   /* Styling untuk wrapper utama yang akan menggunakan Flexbox */
-        .main-content-wrapper {
-            display: flex;
-            flex-wrap: wrap; /* Memungkinkan item untuk pecah baris ke bawah */
-            justify-content: space-between; /* Memberi ruang di antara kolom */
-            gap: 30px; /* Jarak antar kolom */
-            margin-top: 30px;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0; /* Pastikan margin default body 0 */
+        background-color: #e8f5e9;
+        color: #333;
+        padding: 20px; /* Padding default untuk semua sisi */
+      }
+      /* Pastikan box-sizing diatur secara global untuk kemudahan layout */
+      * {
+        box-sizing: border-box;
+      }
+      /* Styling untuk wrapper utama yang akan menggunakan Flexbox */
+      .main-content-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+        margin-top: 30px;
+      }
 
-        /* Styling untuk bagian input (ciri-ciri dan tombol) */
-        .input-controls-section {
-            flex: 1; /* Akan tumbuh mengisi ruang yang tersedia */
-            min-width: 300px; /* Lebar minimum sebelum pecah baris */
-        }
+      /* Styling untuk bagian input (ciri-ciri dan tombol) */
+      .input-controls-section {
+        flex: 1; /* Akan tumbuh mengisi ruang yang tersedia */
+        min-width: 380px; /* Tingkatkan min-width agar lebih stabil */
+        /* max-width: 50%; /* Batasi agar tidak terlalu lebar di layar sangat besar */
+      }
 
-        /* Styling untuk bagian hasil */
-        .results-section {
-            flex: 1; /* Akan tumbuh mengisi ruang yang tersedia */
-            min-width: 300px; /* Lebar minimum sebelum pecah baris */
-            background-color: #fff; /* Pastikan background putih seperti container utama */
-            padding: 25px; /* Sesuaikan padding agar terlihat rapi */
-            border-radius: 10px; /* Sesuaikan border-radius */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sesuaikan shadow */
-            /* Menggantikan styling #results yang lama */
-            border-top: none !important; /* Hapus border-top lama jika ada */
-            margin-top: 0 !important; /* Hapus margin-top lama jika ada */
-        }
-        .container {
-             /* max-width: 800px; <-- Hapus atau komen baris ini */
-            width: 100%; /* Pastikan mengambil lebar penuh */
-            padding: 30px; /* Padding ini akan menjadi "jarak" dari tepi layar */
-            margin: 0; /* Hapus margin auto karena sudah full width */
-            background-color: #ffffff; /* Biarkan background putih di dalam container */
-            border-radius: 0; /* Hapus border-radius jika ingin kotak penuh */
-            box-shadow: none; /* Hapus shadow jika ingin tampilan rata */
-            /* Jika Anda tetap ingin bayangan atau border-radius, Anda bisa menambahkan sebuah div wrapper lain di dalam container */
-        }
-        h1, h2 {
-            color: #2e7d32; /* Darker green */
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 2.2em;
-        }
-        .instructions {
-            text-align: center;
-            color: #555;
-            margin-bottom: 30px;
-            font-style: italic;
-            font-size: 1.1em;
-        }
-        .feature-category {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #c8e6c9;
-            border-radius: 10px;
-            background-color: #f0fdf2;
-        }
-        .feature-category h3 {
-            color: #4CAF50; /* Green */
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-            border-bottom: 1px dashed #a5d6a7;
-            padding-bottom: 8px;
-        }
-        .feature-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .feature-item label {
-            flex: 1;
-            font-size: 1.05em;
-            color: #388e3c;
-            margin-right: 15px;
-        }
-        .feature-item select {
-            padding: 8px;
+      /* Styling untuk bagian hasil */
+      .results-section {
+        flex: 1; /* Akan tumbuh mengisi ruang yang tersedia */
+        min-width: 380px; /* Tingkatkan min-width agar lebih stabil */
+        /* max-width: 50%; */
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-top: none !important;
+        margin-top: 0 !important;
+      }
+      .container {
+        width: 100%; /* Ambil lebar penuh */
+        padding: 30px; /* Padding default container */
+        margin: 0; /* Tidak ada margin otomatis */
+        background-color: #ffffff;
+        border-radius: 0; /* Default 0 untuk full width */
+        box-shadow: none; /* Default none untuk full width */
+      }
+      h1,
+      h2 {
+        color: #2e7d32; /* Darker green */
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 2.2em;
+      }
+      .instructions {
+        text-align: center;
+        color: #555;
+        margin-bottom: 30px;
+        font-style: italic;
+        font-size: 1.1em;
+      }
+      .feature-category {
+        margin-bottom: 30px;
+        padding: 20px;
+        border: 1px solid #c8e6c9;
+        border-radius: 10px;
+        background-color: #f0fdf2;
+      }
+      .feature-category h3 {
+        color: #4caf50; /* Green */
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        border-bottom: 1px dashed #a5d6a7;
+        padding-bottom: 8px;
+      }
+      .feature-item {
+        display: flex; /* Tetapkan flex agar label dan select bersebelahan */
+        align-items: center;
+        margin-bottom: 12px;
+        gap: 15px; /* Tambahkan jarak antar label dan select */
+      }
+      .feature-item label {
+        flex: 1; /* Biarkan label tumbuh mengisi ruang */
+        min-width: 180px; /* Minimum width untuk label agar tidak terlalu sempit */
+        max-width: 250px; /* Maksimum width untuk label agar tidak terlalu panjang */
+        margin-right: 0; /* Pastikan margin kanan diatur oleh gap */
+        text-align: left;
+      }
+      .feature-item select {
+      padding: 8px 30px 8px 8px; /* Atas Kanan Bawah Kiri - Sesuaikan '30px' */
+            /* Anda juga bisa menggunakan: padding-right: 30px; jika padding: 8px; sudah ada */
             border: 1px solid #a5d6a7;
             border-radius: 5px;
             font-size: 1em;
             background-color: #e8f5e9;
-        }
-        button {
-            display: block;
-            width: 100%;
-            padding: 18px 25px;
-            background-color: #4CAF50; /* Green */
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 20px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.1%204.3-14.3%2010.1c-2.2%205.8-1.5%2012.8%202%2017.2l128.4%20130.6c2.7%202.7%206.2%204.1%209.7%204.1c3.5%200%207-1.4%209.7-4.1l128.4-130.6c3.5-4.4%204.2-11.4%202-17.2z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 12px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 30px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
+            width: auto;
+            flex-shrink: 0;
+            max-width: 180px;
+            min-width: 120px;
+      }
+      button {
+        display: block;
+        width: 100%;
+        padding: 18px 25px;
+        background-color: #4caf50; /* Green */
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-top: 30px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+      }
+      button:hover {
+        background-color: #388e3c; /* Darker green on hover */
+        transform: translateY(-3px);
+      }
+      .documentation-button {
+        display: block;
+        width: 100%;
+        padding: 15px 25px;
+        background-color: #17a2b8; /* Cyan-ish color */
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-top: 20px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        /* BARU: Tambahkan ini */
+        box-sizing: border-box;
+      }
+      .documentation-button:hover {
+        background-color: #138496;
+        transform: translateY(-3px);
+      }
+      #results {
+        margin-top: 0;
+        border-top: none;
+        padding-top: 0;
+      }
+      .result-item {
+        background-color: #e0f2f7; /* Light blue */
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        border-left: 6px solid #2196f3; /* Blue border */
+        animation: fadeIn 0.6s ease-out;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .result-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.25em;
+      }
+      .result-header strong {
+        color: #1976d2; /* Darker blue */
+      }
+      .result-header span {
+        font-weight: bold;
+        color: #d32f2f; /* Red for CF */
+      }
+      .progress-bar-container {
+        width: 100%;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 15px;
+      }
+      .progress-bar {
+        height: 100%;
+        background-color: #4caf50; /* Green */
+        border-radius: 5px;
+        text-align: center;
+        color: white;
+        line-height: 15px;
+        font-size: 0.8em;
+        transition: width 1s ease-out;
+      }
+      .no-results {
+        text-align: center;
+        color: #6c757d;
+        font-style: italic;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-        button:hover {
-            background-color: #388e3c; /* Darker green on hover */
-            transform: translateY(-3px);
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-.documentation-button {
-            display: block;
-            width: 100%;
-            padding: 15px 25px;
-            background-color: #17a2b8; /* Cyan-ish color */
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 20px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            /* BARU: Tambahkan ini */
-            box-sizing: border-box;
+      }
+      @media (max-width: 768px) {
+        body {
+          padding-left: 0;
+          padding-right: 0;
         }
-        .documentation-button:hover {
-            background-color: #138496;
-            transform: translateY(-3px);
-        }
-        #results {
-                margin-top: 0; /* Pastikan tidak ada margin-top ekstra */
-            border-top: none; /* Pastikan tidak ada border-top ekstra */
-            padding-top: 0; /* Pastikan tidak ada padding-top ekstra */
-        }
-        .result-item {
-            background-color: #e0f2f7; /* Light blue */
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            border-left: 6px solid #2196f3; /* Blue border */
-            animation: fadeIn 0.6s ease-out;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.25em;
-        }
-        .result-header strong {
-            color: #1976d2; /* Darker blue */
-        }
-        .result-header span {
-            font-weight: bold;
-            color: #d32f2f; /* Red for CF */
-        }
-        .progress-bar-container {
-            width: 100%;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            height: 15px;
-        }
-        .progress-bar {
-            height: 100%;
-            background-color: #4CAF50; /* Green */
-            border-radius: 5px;
-            text-align: center;
-            color: white;
-            line-height: 15px;
-            font-size: 0.8em;
-            transition: width 1s ease-out;
-        }
-        .no-results {
-            text-align: center;
-            color: #6c757d;
-            font-style: italic;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
+        .main-content-wrapper {
+          flex-direction: column; /* Ubah arah Flexbox menjadi kolom */
+          gap: 20px; /* Sesuaikan jarak antar bagian */
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .input-controls-section,
+        .results-section {
+          min-width: unset; /* Hapus min-width */
+          width: 100%; /* Ambil lebar penuh */
         }
-  @media (max-width: 768px) {
-            .main-content-wrapper {
-                flex-direction: column; /* Ubah arah Flexbox menjadi kolom */
-                gap: 20px; /* Sesuaikan jarak antar bagian */
-            }
 
-            .input-controls-section,
-            .results-section {
-                min-width: unset; /* Hapus min-width */
-                width: 100%; /* Ambil lebar penuh */
-            }
-
-            /* Untuk mobile, kembalikan styling shadow dan padding ke results-section */
-            .results-section {
-                margin-top: 20px !important; /* Tambahkan margin atas saat menumpuk */
-                padding: 25px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
+        /* Untuk mobile, kembalikan styling shadow dan padding ke results-section */
+        .results-section {
+          margin-top: 20px !important;
+          padding: 20px 15px;
+          box-shadow: none;
+          border-radius: 0;
         }
-  @media (min-width: 769px) {
-            .container {
-                padding: 30px; /* Kembali ke padding semula untuk desktop */
-            }
-  body {
-                padding-left: 50px; /* Contoh padding lebih besar untuk desktop */
-                padding-right: 50px;
-            }
+        .feature-item {
+          flex-direction: column; /* Ubah tata letak label dan select menjadi vertikal */
+          align-items: flex-start; /* Sejajarkan ke kiri */
+          gap: 5px; /* Kurangi jarak antara label dan select */
         }
-/* ... CSS sebelumnya ... */
 
+        .feature-item label {
+          margin-right: 0; /* Hapus margin kanan */
+          width: 100%; /* Label ambil lebar penuh jika menumpuk */
+          text-align: left;
+          max-width: unset; /* Hapus batasan max-width dari desktop */
+        }
+
+        .feature-item select {
+          width: 100%; /* Select ambil lebar penuh di barisnya sendiri */
+          max-width: 250px; /* Batasi lebar maksimal select di mobile */
+          min-width: unset; /* Hapus batasan min-width dari desktop */
+        }
+        .container {
+          padding-left: 15px;
+          padding-right: 15px;
+          padding-top: 20px;
+          padding-bottom: 20px;
+          border-radius: 0;
+          box-shadow: none;
+        }
+      }
+      @media (min-width: 769px) {
+        .container {
+          max-width: 1200px; /* Contoh batas max-width di desktop */
+          margin: 0 auto; /* Tengahkkan jika ada max-width */
+          border-radius: 12px; /* Kembalikan border-radius */
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        body {
+          padding-left: 50px;
+          padding-right: 50px;
+        }
+      }
+
+      .floating-doc-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: fixed; /* Membuat elemen melayang */
+        bottom: 20px;
+        right: 30px;
+        background-color: #007bff; /* Warna latar tombol */
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1000; /* Pastikan tombol berada di atas elemen lain */
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        animation: float 3s ease-in-out infinite; /* Animasi mengambang */
+      }
+
+      .floating-doc-button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+      }
+
+      .floating-doc-button .icon {
+        font-size: 1.5em; /* Ukuran ikon */
+      }
+
+      /* Animasi mengambang */
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsif: Pindahkan sedikit ke kiri di layar kecil agar tidak tertutup */
+      @media (max-width: 600px) {
         .floating-doc-button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: fixed; /* Membuat elemen melayang */
-            bottom: 20px;
-            right: 30px;
-            background-color: #007bff; /* Warna latar tombol */
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000; /* Pastikan tombol berada di atas elemen lain */
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            animation: float 3s ease-in-out infinite; /* Animasi mengambang */
+          right: 15px;
+          bottom: 15px;
+          padding: 12px 15px;
+          font-size: 0.9em;
+          gap: 5px;
         }
-
-        .floating-doc-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
         .floating-doc-button .icon {
-            font-size: 1.5em; /* Ukuran ikon */
+          font-size: 1.2em;
         }
-
-        /* Animasi mengambang */
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
+      }
+      @media (max-width: 480px) {
+        .container {
+          padding-left: 10px;
+          padding-right: 10px;
         }
-
-        /* Responsif: Pindahkan sedikit ke kiri di layar kecil agar tidak tertutup */
-        @media (max-width: 600px) {
-            .floating-doc-button {
-                right: 15px;
-                bottom: 15px;
-                padding: 12px 15px;
-                font-size: 0.9em;
-                gap: 5px;
-            }
-            .floating-doc-button .icon {
-                font-size: 1.2em;
-            }
+        .feature-item select {
+          max-width: 100%; /* Pastikan select tidak melebihi lebar kontainer */
         }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>Sistem Pakar Identifikasi Hewan Ternak</h1>
-        <p class="instructions">Pilih tingkat keyakinan Anda terhadap setiap ciri-ciri hewan, lalu klik 'Identifikasi Hewan!'</p>
-   <div class="main-content-wrapper">
-            <div class="input-controls-section">
-                <div class="feature-category">
-                    <h3>Ciri-ciri Fisik Umum</h3>
-                    <div class="feature-item">
-                        <label for="g-berkaki-empat">Berkaki empat</label>
-                        <select id="g-berkaki-empat">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                    <div class="feature-item">
-                        <label for="g-bertanduk">Bertanduk</label>
-                        <select id="g-bertanduk">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                    <div class="feature-item">
-                        <label for="g-berkulit-tebal">Berkulit tebal dan berkerut</label>
-                        <select id="g-berkulit-tebal">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                     <div class="feature-item">
-                        <label for="g-berbulu-tebal">Berbulu tebal (mirip domba)</label>
-                        <select id="g-berbulu-tebal">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                    <div class="feature-item">
-                        <label for="g-mempunyai-punuk">Mempunyai punuk</label>
-                        <select id="g-mempunyai-punuk">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="feature-category">
-                    <h3>Ciri-ciri Perilaku & Diet</h3>
-                    <div class="feature-item">
-                        <label for="g-memakan-rumput">Memakan rumput/tumbuhan (herbivora)</label>
-                        <select id="g-memakan-rumput">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                    <div class="feature-item">
-                        <label for="g-suka-berkubang">Suka berkubang di lumpur/air</label>
-                        <select id="g-suka-berkubang">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="feature-category">
-                    <h3>Ciri-ciri Produksi/Manfaat</h3>
-                    <div class="feature-item">
-                        <label for="g-menghasilkan-susu">Menghasilkan susu</label>
-                        <select id="g-menghasilkan-susu">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                    <div class="feature-item">
-                        <label for="g-menghasilkan-daging">Menghasilkan daging</label>
-                        <select id="g-menghasilkan-daging">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                    <div class="feature-item">
-                        <label for="g-digunakan-tenaga-kerja">Digunakan sebagai tenaga kerja</label>
-                        <select id="g-digunakan-tenaga-kerja">
-                            <option value="0">Tidak Tahu</option>
-                            <option value="0.2">Sedikit Yakin</option>
-                            <option value="0.5">Cukup Yakin</option>
-                            <option value="0.8">Sangat Yakin</option>
-                            <option value="1.0">Pasti Ada</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <button onclick="identifyAnimal()">Identifikasi Hewan!</button>
+      <h1>Sistem Pakar Identifikasi Hewan Ternak</h1>
+      <p class="instructions">
+        Pilih tingkat keyakinan Anda terhadap setiap ciri-ciri hewan, lalu klik
+        'Identifikasi Hewan!'
+      </p>
+      <div class="main-content-wrapper">
+        <div class="input-controls-section">
+          <div class="feature-category">
+            <h3>Ciri-ciri Fisik Umum</h3>
+            <div class="feature-item">
+              <label for="g-berkaki-empat">Berkaki empat</label>
+              <select id="g-berkaki-empat">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
             </div>
-
-            <div id="results" class="results-section">
-                <h2>Hasil Identifikasi:</h2>
-                <div id="animalResults">
-                    <p class="no-results">Pilih tingkat keyakinan pada ciri-ciri di atas dan klik 'Identifikasi Hewan!'</p>
-                </div>
+            <div class="feature-item">
+              <label for="g-bertanduk">Bertanduk</label>
+              <select id="g-bertanduk">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
             </div>
-        </div>     
-       </div>
+            <div class="feature-item">
+              <label for="g-berkulit-tebal">Berkulit tebal dan berkerut</label>
+              <select id="g-berkulit-tebal">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
+            </div>
+            <div class="feature-item">
+              <label for="g-berbulu-tebal">Berbulu tebal (mirip domba)</label>
+              <select id="g-berbulu-tebal">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
+            </div>
+            <div class="feature-item">
+              <label for="g-mempunyai-punuk">Mempunyai punuk</label>
+              <select id="g-mempunyai-punuk">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
+            </div>
+          </div>
 
- <a href="dokumentasi.html" class="floating-doc-button">
-        <span class="icon">📄</span> Dokumentasi
+          <div class="feature-category">
+            <h3>Ciri-ciri Perilaku & Diet</h3>
+            <div class="feature-item">
+              <label for="g-memakan-rumput"
+                >Memakan rumput/tumbuhan (herbivora)</label
+              >
+              <select id="g-memakan-rumput">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
+            </div>
+            <div class="feature-item">
+              <label for="g-suka-berkubang">Suka berkubang di lumpur/air</label>
+              <select id="g-suka-berkubang">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="feature-category">
+            <h3>Ciri-ciri Produksi/Manfaat</h3>
+            <div class="feature-item">
+              <label for="g-menghasilkan-susu">Menghasilkan susu</label>
+              <select id="g-menghasilkan-susu">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
+            </div>
+            <div class="feature-item">
+              <label for="g-menghasilkan-daging">Menghasilkan daging</label>
+              <select id="g-menghasilkan-daging">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
+            </div>
+            <div class="feature-item">
+              <label for="g-digunakan-tenaga-kerja"
+                >Digunakan sebagai tenaga kerja</label
+              >
+              <select id="g-digunakan-tenaga-kerja">
+                <option value="0">Tidak Tahu</option>
+                <option value="0.2">Sedikit Yakin</option>
+                <option value="0.5">Cukup Yakin</option>
+                <option value="0.8">Sangat Yakin</option>
+                <option value="1.0">Pasti Ada</option>
+              </select>
+            </div>
+          </div>
+
+          <button onclick="identifyAnimal()">Identifikasi Hewan!</button>
+        </div>
+
+        <div id="results" class="results-section">
+          <h2>Hasil Identifikasi:</h2>
+          <div id="animalResults">
+            <p class="no-results">
+              Pilih tingkat keyakinan pada ciri-ciri di atas dan klik
+              'Identifikasi Hewan!'
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="dokumentasi.html" class="floating-doc-button">
+      <span class="icon">📄</span> Dokumentasi
     </a>
 
     <script>
-// --- Basis Pengetahuan Sistem Pakar (Certainty Factor) ---
-// Setiap ciri memiliki CF untuk hewan-hewan tertentu.
-// CF (0.0 - 1.0) menunjukkan seberapa kuat ciri tersebut mengindikasikan hewan.
-const knowledgeBase = {
-    "Sapi": {
-        "berkaki-empat": 0.9,
-        "bertanduk": 0.6, // Tidak semua sapi bertanduk kuat
-        "memakan-rumput": 0.95,
-        "menghasilkan-susu": 0.85,
-        "menghasilkan-daging": 0.75,
-        "digunakan-tenaga-kerja": 0.7,
-        "berkulit-tebal": 0.5 // Lebih tebal dari kambing/domba, tapi tidak seperti gajah
-    },
-    "Kambing": {
-        "berkaki-empat": 0.9,
-        "bertanduk": 0.8, // Lebih umum bertanduk daripada sapi
-        "memakan-rumput": 0.9,
-        "menghasilkan-susu": 0.7,
-        "menghasilkan-daging": 0.65
-    },
-    "Domba": {
-        "berkaki-empat": 0.9,
-        "memakan-rumput": 0.85,
-        "menghasilkan-daging": 0.6,
-        "berbulu-tebal": 0.98, // Ciri sangat khas domba
-        "bertanduk": 0.4 // Beberapa domba tidak bertanduk
-    },
-    "Babi": {
-        "berkaki-empat": 0.9,
-        "suka-berkubang": 0.9,
-        "menghasilkan-daging": 0.9,
-        "memakan-rumput": 0.3 // Omnivora, bukan hanya rumput
-    },
-    "Unta": {
-        "berkaki-empat": 0.9,
-        "mempunyai-punuk": 0.98, // Ciri sangat khas
-        "memakan-rumput": 0.7, // Mampu makan berbagai tumbuhan gurun
-        "digunakan-tenaga-kerja": 0.8,
-        "berkulit-tebal": 0.8
-    },
-    "Kuda": {
-        "berkaki-empat": 0.98,
-        "memakan-rumput": 0.9,
-        "digunakan-tenaga-kerja": 0.95,
-        "menghasilkan-daging": 0.3 // Jarang di sebagian budaya
-    }
-};
+      // --- Basis Pengetahuan Sistem Pakar (Certainty Factor) ---
+      // Setiap ciri memiliki CF untuk hewan-hewan tertentu.
+      // CF (0.0 - 1.0) menunjukkan seberapa kuat ciri tersebut mengindikasikan hewan.
+      const knowledgeBase = {
+        Sapi: {
+          "berkaki-empat": 0.9,
+          bertanduk: 0.6, // Tidak semua sapi bertanduk kuat
+          "memakan-rumput": 0.95,
+          "menghasilkan-susu": 0.85,
+          "menghasilkan-daging": 0.75,
+          "digunakan-tenaga-kerja": 0.7,
+          "berkulit-tebal": 0.5, // Lebih tebal dari kambing/domba, tapi tidak seperti gajah
+        },
+        Kambing: {
+          "berkaki-empat": 0.9,
+          bertanduk: 0.8, // Lebih umum bertanduk daripada sapi
+          "memakan-rumput": 0.9,
+          "menghasilkan-susu": 0.7,
+          "menghasilkan-daging": 0.65,
+        },
+        Domba: {
+          "berkaki-empat": 0.9,
+          "memakan-rumput": 0.85,
+          "menghasilkan-daging": 0.6,
+          "berbulu-tebal": 0.98, // Ciri sangat khas domba
+          bertanduk: 0.4, // Beberapa domba tidak bertanduk
+        },
+        Babi: {
+          "berkaki-empat": 0.9,
+          "suka-berkubang": 0.9,
+          "menghasilkan-daging": 0.9,
+          "memakan-rumput": 0.3, // Omnivora, bukan hanya rumput
+        },
+        Unta: {
+          "berkaki-empat": 0.9,
+          "mempunyai-punuk": 0.98, // Ciri sangat khas
+          "memakan-rumput": 0.7, // Mampu makan berbagai tumbuhan gurun
+          "digunakan-tenaga-kerja": 0.8,
+          "berkulit-tebal": 0.8,
+        },
+        Kuda: {
+          "berkaki-empat": 0.98,
+          "memakan-rumput": 0.9,
+          "digunakan-tenaga-kerja": 0.95,
+          "menghasilkan-daging": 0.3, // Jarang di sebagian budaya
+        },
+      };
 
-/**
- * Fungsi untuk menggabungkan dua nilai Certainty Factor (CF).
- * Rumus: CF_gabungan = CF1 + CF2 * (1 - CF1)
- * Asumsi: Semua CF adalah positif (bukti menambah keyakinan).
- */
-function combineCF(cf1, cf2) {
-    // Pastikan nilai CF tidak melebihi 1.0
-    return Math.min(1.0, cf1 + cf2 * (1 - cf1));
-}
+      /**
+       * Fungsi untuk menggabungkan dua nilai Certainty Factor (CF).
+       * Rumus: CF_gabungan = CF1 + CF2 * (1 - CF1)
+       * Asumsi: Semua CF adalah positif (bukti menambah keyakinan).
+       */
+      function combineCF(cf1, cf2) {
+        // Pastikan nilai CF tidak melebihi 1.0
+        return Math.min(1.0, cf1 + cf2 * (1 - cf1));
+      }
 
-/**
- * Fungsi utama untuk mengidentifikasi hewan.
- */
-function identifyAnimal() {
-    const selectedFeatureStrengths = {}; // Objek untuk menyimpan kekuatan keyakinan pengguna pada setiap ciri
+      /**
+       * Fungsi utama untuk mengidentifikasi hewan.
+       */
+      function identifyAnimal() {
+        const selectedFeatureStrengths = {}; // Objek untuk menyimpan kekuatan keyakinan pengguna pada setiap ciri
 
-    // Ambil semua elemen <select> di halaman
-    document.querySelectorAll('.feature-category select').forEach(selectElement => {
-        const featureId = selectElement.id.replace('g-', ''); // Ambil ID tanpa 'g-'
-        // Konversi nilai dari select (string) ke float
-        selectedFeatureStrengths[featureId] = parseFloat(selectElement.value);
-    });
+        // Ambil semua elemen <select> di halaman
+        document
+          .querySelectorAll(".feature-category select")
+          .forEach((selectElement) => {
+            const featureId = selectElement.id.replace("g-", ""); // Ambil ID tanpa 'g-'
+            // Konversi nilai dari select (string) ke float
+            selectedFeatureStrengths[featureId] = parseFloat(
+              selectElement.value
+            );
+          });
 
-    const animalCFs = {}; // Objek untuk menyimpan total CF setiap hewan
+        const animalCFs = {}; // Objek untuk menyimpan total CF setiap hewan
 
-    // Inisialisasi semua hewan dengan CF 0
-    for (const animal in knowledgeBase) {
-        animalCFs[animal] = 0;
-    }
+        // Inisialisasi semua hewan dengan CF 0
+        for (const animal in knowledgeBase) {
+          animalCFs[animal] = 0;
+        }
 
-    let anyFeatureSelected = false;
-    for (const feature in selectedFeatureStrengths) {
-        if (selectedFeatureStrengths[feature] > 0) { // Jika pengguna memiliki keyakinan > 0
+        let anyFeatureSelected = false;
+        for (const feature in selectedFeatureStrengths) {
+          if (selectedFeatureStrengths[feature] > 0) {
+            // Jika pengguna memiliki keyakinan > 0
             anyFeatureSelected = true;
             break;
+          }
         }
-    }
 
-    if (!anyFeatureSelected) {
-        document.getElementById('animalResults').innerHTML = '<p class="no-results">Pilih setidaknya satu ciri dengan tingkat keyakinan tertentu.</p>';
-        return;
-    }
+        if (!anyFeatureSelected) {
+          document.getElementById("animalResults").innerHTML =
+            '<p class="no-results">Pilih setidaknya satu ciri dengan tingkat keyakinan tertentu.</p>';
+          return;
+        }
 
-    // Iterasi setiap hewan di basis pengetahuan
-    for (const animal in knowledgeBase) {
-        const animalFeatures = knowledgeBase[animal]; // Ciri-ciri hewan ini dari basis pengetahuan
-        let currentAnimalCF = 0; // CF awal untuk hewan ini, diakumulasi dari bukti
+        // Iterasi setiap hewan di basis pengetahuan
+        for (const animal in knowledgeBase) {
+          const animalFeatures = knowledgeBase[animal]; // Ciri-ciri hewan ini dari basis pengetahuan
+          let currentAnimalCF = 0; // CF awal untuk hewan ini, diakumulasi dari bukti
 
-        // Iterasi setiap ciri yang ada di basis pengetahuan hewan ini
-        for (const featureInKB in animalFeatures) {
+          // Iterasi setiap ciri yang ada di basis pengetahuan hewan ini
+          for (const featureInKB in animalFeatures) {
             // Dapatkan CF yang diberikan pakar untuk ciri ini pada hewan ini
             const expertCFForFeature = animalFeatures[featureInKB];
-            
+
             // Dapatkan CF yang diberikan pengguna untuk ciri ini
             const userCFForFeature = selectedFeatureStrengths[featureInKB] || 0; // Default 0 jika tidak dipilih/tidak tahu
 
             // Hanya gabungkan jika pengguna memiliki keyakinan pada ciri ini
             if (userCFForFeature > 0 && expertCFForFeature > 0) {
-                // CF gabungan ciri: Expert_CF * User_CF
-                // Ini adalah cara untuk "menurunkan" keyakinan pakar berdasarkan ketidakpastian pengguna.
-                const effectiveCF = expertCFForFeature * userCFForFeature; 
-                currentAnimalCF = combineCF(currentAnimalCF, effectiveCF);
+              // CF gabungan ciri: Expert_CF * User_CF
+              // Ini adalah cara untuk "menurunkan" keyakinan pakar berdasarkan ketidakpastian pengguna.
+              const effectiveCF = expertCFForFeature * userCFForFeature;
+              currentAnimalCF = combineCF(currentAnimalCF, effectiveCF);
             }
+          }
+          animalCFs[animal] = currentAnimalCF; // Simpan CF total untuk hewan ini
         }
-        animalCFs[animal] = currentAnimalCF; // Simpan CF total untuk hewan ini
-    }
 
-    // Ubah objek animalCFs menjadi array agar bisa diurutkan
-    const sortedAnimals = Object.keys(animalCFs).map(animal => ({
-        name: animal,
-        cf: animalCFs[animal]
-    })).sort((a, b) => b.cf - a.cf); // Urutkan dari CF tertinggi
+        // Ubah objek animalCFs menjadi array agar bisa diurutkan
+        const sortedAnimals = Object.keys(animalCFs)
+          .map((animal) => ({
+            name: animal,
+            cf: animalCFs[animal],
+          }))
+          .sort((a, b) => b.cf - a.cf); // Urutkan dari CF tertinggi
 
-    displayResults(sortedAnimals);
-}
+        displayResults(sortedAnimals);
+      }
 
-/**
- * Fungsi untuk menampilkan hasil di halaman web.
- */
-function displayResults(results) {
-    const resultsDiv = document.getElementById('animalResults');
-    resultsDiv.innerHTML = ''; // Kosongkan hasil sebelumnya
+      /**
+       * Fungsi untuk menampilkan hasil di halaman web.
+       */
+      function displayResults(results) {
+        const resultsDiv = document.getElementById("animalResults");
+        resultsDiv.innerHTML = ""; // Kosongkan hasil sebelumnya
 
-    // Filter hasil yang CF-nya lebih besar dari ambang batas (misal 0.1)
-    const significantResults = results.filter(item => item.cf > 0.05); // Ambang batas lebih rendah untuk fleksibilitas
+        // Filter hasil yang CF-nya lebih besar dari ambang batas (misal 0.1)
+        const significantResults = results.filter((item) => item.cf > 0.05); // Ambang batas lebih rendah untuk fleksibilitas
 
-    if (significantResults.length === 0) {
-        resultsDiv.innerHTML = '<p class="no-results">Tidak ada hewan yang cocok secara signifikan berdasarkan ciri-ciri yang dipilih.</p>';
-        return;
-    }
+        if (significantResults.length === 0) {
+          resultsDiv.innerHTML =
+            '<p class="no-results">Tidak ada hewan yang cocok secara signifikan berdasarkan ciri-ciri yang dipilih.</p>';
+          return;
+        }
 
-    significantResults.forEach(item => {
-        const percentageCF = (item.cf * 100).toFixed(1); // Konversi CF ke persentase
+        significantResults.forEach((item) => {
+          const percentageCF = (item.cf * 100).toFixed(1); // Konversi CF ke persentase
 
-        const resultItem = document.createElement('div');
-        resultItem.classList.add('result-item');
-        
-        resultItem.innerHTML = `
+          const resultItem = document.createElement("div");
+          resultItem.classList.add("result-item");
+
+          resultItem.innerHTML = `
             <div class="result-header">
                 <strong>${item.name}</strong> <span>CF: ${percentageCF}%</span>
             </div>
@@ -576,9 +655,9 @@ function displayResults(results) {
                 <div class="progress-bar" style="width: ${percentageCF}%;"></div>
             </div>
         `;
-        resultsDiv.appendChild(resultItem);
-    });
-}
-</script>
-</body>
+          resultsDiv.appendChild(resultItem);
+        });
+      }
+    </script>
+  </body>
 </html>
